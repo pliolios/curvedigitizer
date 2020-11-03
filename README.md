@@ -9,7 +9,7 @@ The program is very easy to use and it pops up dialogue boxes at every step. To 
 ```bash
 python curvedigitizer.py
 ```
-and follow the onscreen instructions.
+and follow the onscreen instructions. The tool does not support, yet, rotated or skew plots (i.e. badly scanned).
 
 ## Copyright
 Copyright (c) 2020 Pantelis Liolios.
