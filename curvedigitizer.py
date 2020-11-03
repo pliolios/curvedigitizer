@@ -1,5 +1,5 @@
 '''
-Copyright (c) 2019 Pantelis Liolios
+Copyright (c) 2020 Pantelis Liolios
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
