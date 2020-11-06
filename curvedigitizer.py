@@ -33,7 +33,7 @@ def run():
     Main function of curve digitizer
     '''
 
-    # open the dialbox
+    # open the dialog box
     # first hide the root window
     root = Tk()
     root.withdraw()
@@ -55,10 +55,10 @@ def run():
     ax.axis('off')  # clear x-axis and y-axis
 
     # get reference length in x direction
-    xfactor = getReferenceLength("x", 0)
+    xfactor = getReferenceLength(0)
 
     # get the reference length in y direction
-    yfactor = getReferenceLength("y", 1)
+    yfactor = getReferenceLength(1)
     
     # digitize curves until stoped by the user
     reply = True
@@ -111,10 +111,16 @@ def run():
     # clear the figure
     plt.clf()
 
-def getReferenceLength(direction, index):
+def getReferenceLength(index):
     '''
     Get the reference length in the requested direction
+
+    USAGE: factor = getReferenceLength(index)
+    index = 0 for x-direction or 1 for y-direction
     '''
+
+    # define a 'direction' string
+    direction = 'x' if index == 0 else 'y'
 
     # get the reference length
     reply = False
@@ -123,30 +129,30 @@ def getReferenceLength(direction, index):
             "Use the mouse to select the reference length in {:s} direction.".format(direction) +
             "Click the start and the end of the reference length."
             )
-        x = plt.ginput(
+        coord = plt.ginput(
             2,
             timeout=0,
             show_clicks=True
-            )
+            ) # capture only two points
         # ask for a valid length
         validLength = False
         while not validLength:
-            xreflength = simpledialog.askfloat("Enter reference length", "Enter the reference length in {:s} direction".format(direction))#,
-                                # minvalue=0.0, maxvalue=1000000.0)
-            if isinstance(xreflength, float):
+            reflength = simpledialog.askfloat("Enter reference length",
+                "Enter the reference length in {:s} direction".format(direction))
+            if isinstance(reflength, float):
                 validLength = True
             else:
                 messagebox.showerror("Error","Please provide a valid length.")
         
         # calculate scaling factor
-        deltaxref=x[1][index]-x[0][index]
-        xfactor=xreflength/deltaxref
+        deltaref=coord[1][index]-coord[0][index]
+        factor=reflength/deltaref
 
         reply = messagebox.askyesno("Length confirmation",
-            "You selected {:4.0f} pixels in {:s} direction corresponding to {:4.4f} units. Is this correct?".format(deltaxref, direction, xreflength)
+            "You selected {:4.0f} pixels in {:s} direction corresponding to {:4.4f} units. Is this correct?".format(deltaref, direction, reflength)
             )
     
-    return xfactor
+    return factor
 
 if __name__ == "__main__":
     '''
